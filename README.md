@@ -1,5 +1,5 @@
 # clip-fine-tuning
-Fine-tuning Open AI Clip for image encoding using Flicker Data
+Fine-tuning Open AI Clip for image encoding using Flicker Data 
 
 ![image.png](https://miro.medium.com/max/786/1*tg7akErlMSyCLQxrMtQIYw.png)
 
