@@ -26,7 +26,7 @@ python3 fine_tune_clip -e 30
 ```
 
 
-A step-by-step guide is also available in `training_model.ipynb`
+A step-by-step guide is also available in `clip-fine-tuning.ipynb`
 
 
 ## Demo
