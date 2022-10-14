@@ -17,7 +17,7 @@ chmod +x download_data.sh
 
 ```
 
-A small training script is available, run the following to fine-tune for 30 epochs using 20% of the data and a 70-30% train-test partition.
+Run the following to fine-tune for 30 epochs using 20% of the data and a 70-30% train-test partition.
 
 
 ```python
