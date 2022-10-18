@@ -106,7 +106,7 @@ def train_model(n_epochs,train_dataloader,test_dataloader,checkpoint_path:str=".
                 os.remove(Path(checkpoint_path)/"best_model.pt")
             torch.save(model.state_dict(), Path(checkpoint_path)/"best_model.pt")
             logger.info("Saving checkpoint to WANDB")
-            wandb.save(Path(checkpoint_path)/"best_model.pt")
+            wandb.save(checkpoint_path+"/best_model.pt")
             
         
         scheduler.step()
@@ -140,10 +140,10 @@ if __name__=="__main__":
     parser.add_argument("-tr", "--train_prop",type=float,default=0.7,help="train proportion of data", dest="train_prop")
     parser.add_argument("-e", "--epochs",type=int,default=5, help="Number of Epochs", dest="n_epochs")
     parser.add_argument("-bs", "--batch_size",type=int,default=32, help="Batch Size", dest="batch_size")
+    parser.add_argument("-n", "--runname",type=str,default="clip-ft", help="Run name for training-wandb runname", dest="run_name")
     args = parser.parse_args()
-    print(args)
     labels=labels[~labels.duplicated(subset="image_name",keep="first")].sample(frac=args.prop_data)
-    labels['captions']=labels[' comment'].map(lambda d: d.strip())
+    labels['captions']=labels['translations'].map(lambda d: d.strip())
     train,test=train_test_split(labels,train_size=args.train_prop)
     ##make sure when using ImageFolder, idx positions match, ImageFolder will load files in ascending order by filename
     train.sort_values(by="image_name",ascending=True,inplace=True)
@@ -198,7 +198,7 @@ if __name__=="__main__":
     torch.cuda.empty_cache()
     
     
-    run=wandb.init(project="clip-fine-tuning",name=f"run-4exp",config={"epochs": args.n_epochs,"batch_size":args.batch_size})
+    run=wandb.init(project="clip-fine-tuning",name=f"{args.run_name}_run-exp",config={"epochs": args.n_epochs,"batch_size":args.batch_size})
     
     logger.info("4. Starting Training...")
     train_model(args.n_epochs,tr_dl,ts_dl)
