@@ -194,7 +194,9 @@ if __name__=="__main__":
     logger.info("3- DataLoaders... Done")
     
     ## before training
-    scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.95)
+    #scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.95)
+    ##original paper
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, len(tr_dl)*args.n_epochs)
     torch.cuda.empty_cache()
     
     
