@@ -68,9 +68,9 @@ def train_model(n_epochs,train_dataloader,test_dataloader,checkpoint_path:str=".
         
     print(f"Using {DEVICE} for training")
     best_score=-9e10
-    train_loss=0.0
     for epoch in tqdm(range(n_epochs)):
         total_steps=0
+        train_loss=0.0
         model.train()
         for step,data in enumerate(tqdm(train_dataloader),1):
             
