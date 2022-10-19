@@ -30,7 +30,7 @@ DEVICE="cuda:0" if torch.cuda.is_available() else "cpu"
 BASE_PATH="flicker_data/flickr30k_images/flickr30k_images"
 
 #preprocess is just a sequential module
-model, preprocess = clip.load("ViT-B/32")
+model, preprocess = clip.load("ViT-B/32") ## it can be modified to any model available in CLIP
 model.to(DEVICE)
 
 loss_img = nn.CrossEntropyLoss()
@@ -67,7 +67,7 @@ def train_model(n_epochs,train_dataloader,test_dataloader,checkpoint_path:str=".
         os.makedirs(checkpoint_path)
         
     print(f"Using {DEVICE} for training")
-    best_score=-9e10
+    best_score=9e10
     for epoch in tqdm(range(n_epochs)):
         total_steps=0
         train_loss=0.0
@@ -99,7 +99,7 @@ def train_model(n_epochs,train_dataloader,test_dataloader,checkpoint_path:str=".
         wandb.log({'test_loss':val_metrics})
         logger.info(f"Epoch {epoch} end -> Train Loss: {train_loss/len(train_dataloader)} | Validation Loss: {val_metrics:.4f}")
 
-        if val_metrics>best_score:
+        if val_metrics<best_score:
             print("Better score reached, saving checkpoint...")
             best_score=val_metrics
             if os.path.exists(Path(checkpoint_path)/"best_model.pt"):
@@ -139,7 +139,7 @@ if __name__=="__main__":
     parser.add_argument("-p", "--portion",type=float,default=0.2, help="fraction of the full data to use for train-test split", dest="prop_data")
     parser.add_argument("-tr", "--train_prop",type=float,default=0.7,help="train proportion of data", dest="train_prop")
     parser.add_argument("-e", "--epochs",type=int,default=5, help="Number of Epochs", dest="n_epochs")
-    parser.add_argument("-bs", "--batch_size",type=int,default=32, help="Batch Size", dest="batch_size")
+    parser.add_argument("-bs", "--batch_size",type=int,default=45, help="Batch Size", dest="batch_size")
     parser.add_argument("-n", "--runname",type=str,default="clip-ft", help="Run name for training-wandb runname", dest="run_name")
     args = parser.parse_args()
     labels=labels[~labels.duplicated(subset="image_name",keep="first")].sample(frac=args.prop_data)
