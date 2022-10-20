@@ -108,11 +108,7 @@ def train_model(n_epochs,train_dataloader,test_dataloader,checkpoint_path:str=".
             logger.info("Saving checkpoint to WANDB")
             wandb.save(checkpoint_path+"/best_model.pt")
             
-        
-        scheduler.step()
-            
-            
-
+        scheduler.step()    
         
 def validate(test_dl):
     model.eval()
@@ -129,9 +125,6 @@ def validate(test_dl):
     test_total_loss=test_loss/len(test_dl)
     return test_total_loss
     
-   
-
-
 
 if __name__=="__main__":
     
@@ -179,7 +172,6 @@ if __name__=="__main__":
     test_images = datasets.ImageFolder("./flicker_data/test/",transform=preprocess)
     
     logger.info("2- Reading Images... Done")
-    
         
     train_dataset = FlickerDataset(train.captions.values.tolist(), train_images)
     test_dataset = FlickerDataset(test.captions.values.tolist(), test_images)
@@ -190,7 +182,6 @@ if __name__=="__main__":
     tr_dl=DataLoader(train_dataset,shuffle=True,batch_size=args.batch_size)
     ts_dl=DataLoader(test_dataset,shuffle=True,batch_size=args.batch_size)
     
-    
     logger.info("3- DataLoaders... Done")
     
     ## before training
@@ -199,12 +190,9 @@ if __name__=="__main__":
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, len(tr_dl)*args.n_epochs)
     torch.cuda.empty_cache()
     
-    
     run=wandb.init(project="clip-fine-tuning",name=f"{args.run_name}_run-exp",config={"epochs": args.n_epochs,"batch_size":args.batch_size})
     
     logger.info("4. Starting Training...")
     train_model(args.n_epochs,tr_dl,ts_dl)
-    
     run.finish()
-
 
