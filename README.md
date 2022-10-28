@@ -1,8 +1,8 @@
 # clip-fine-tuning
-Fine-tuning Open AI Clip for image encoding using Flicker Data. See Arxiv [Paper](https://arxiv.org/abs/2103.00020). Translating english captions to spanish using a transformer from the University of Helsinki available in [HuggingFace](https://huggingface.co/Helsinki-NLP/opus-mt-en-es)
+Fine-tuning Open AI's Clip for image encoding using Flicker Data, see Arxiv [Paper](https://arxiv.org/abs/2103.00020). This was made translating english captions to spanish using a transformer from the University of Helsinki available in [HuggingFace](https://huggingface.co/Helsinki-NLP/opus-mt-en-es).
 
 
-![image.png](https://miro.medium.com/max/786/1*tg7akErlMSyCLQxrMtQIYw.png)
+![image.png](https://miro.medium.com/max/786/1*tg7akErlMSyCLQxrMtQIYw.png) (Image from OpenAI)
 
 
 This training script for image-text representation but can be extended to any non-english language captioned images.
