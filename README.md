@@ -39,3 +39,12 @@ A step-by-step guide is also available in `clip-fine-tuning.ipynb`
 
 A small notebook for inference was created using Flickr30K dataset, see `inference.ipynb`
 
+### Streamlit App
+
+There is a small streamlit app available in `/app`. Run the following:
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py --server.port=6060
+```
+
