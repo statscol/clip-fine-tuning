@@ -35,6 +35,8 @@ with st.sidebar:
     )
     form = st.form(key='search_form')
     search_string=form.text_input(label='Busca imágenes', value="Gatos en el campo")
+    n_results = st.slider('Max Images', 0, 100, 15,5)
+
     _,col2,_=st.columns([1,1,1])
     with col2:
         search_trigger=form.form_submit_button(label='Search')
@@ -45,7 +47,7 @@ if search_trigger and search_string!="":
     st.markdown("<h1 style='text-align: center; color: white;'>Imágenes similares encontradas </h1>", unsafe_allow_html=True)
     ##image grid taken from https://discuss.streamlit.io/t/grid-of-images-with-the-same-height/10668/6
     idx = 0 
-    sim,indexes=search_images(text=search_string,faiss_index=faiss_index,k=15)
+    sim,indexes=search_images(text=search_string,faiss_index=faiss_index,k=n_results)
     sim=sim.squeeze().tolist()
     indexes=indexes.squeeze().tolist()
     for _ in range(len(indexes)):
